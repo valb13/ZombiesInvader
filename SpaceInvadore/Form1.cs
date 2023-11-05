@@ -1,4 +1,6 @@
+using System.Windows.Forms;
 using ZombiesInvader;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace SpaceInvadore
 {
@@ -291,9 +293,17 @@ namespace SpaceInvadore
                 {
                     gameOver = true;
                     GameTimer.Stop();
-                    MessageBox.Show($"Game Over \n" +
-                        $"Votre score est de : {score}");
-                    
+                    string message = $"Votre score est de : {score}";
+                    string caption = "Game Over";
+                    MessageBoxButtons buttons = MessageBoxButtons.OK;
+                    DialogResult result;
+                    result = MessageBox.Show(message, caption, buttons);
+                    if (result == System.Windows.Forms.DialogResult.OK)
+                    {
+                        // Closes the parent form.
+                        this.Close();
+                    }
+
                 }
             }
 
