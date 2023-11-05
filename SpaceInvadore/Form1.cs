@@ -143,9 +143,12 @@ namespace SpaceInvadore
             int top = random.Next(20, this.ClientSize.Height - 20); // position en ordonnée du zombie
 
 
+
             PictureBox zombos = new PictureBox(); // création d'une picturebox pour mettre un zombie sur la carte
             zombos.SizeMode = PictureBoxSizeMode.AutoSize; // on adapte la taille de la picturebox à l'image
             zombos.Tag = "zombie"; // tag du zombie
+
+           
 
             if (left < playerLeft) // si le zombie est à gauche du joueur
             {
@@ -170,6 +173,12 @@ namespace SpaceInvadore
 
             zombies.Add(zombos); // on ajoute le zombie à la liste des zombies
             this.Controls.Add(zombos); // on ajoute le zombie sur la carte
+
+            if (zombos.Bounds.IntersectsWith(player.Bounds)) // sécurité pour ne pas mourir à l'apparition d'un zombie
+            {
+                zombos.Left = 10;
+                zombos.Top = 10;
+            }
 
         }
 
@@ -284,6 +293,7 @@ namespace SpaceInvadore
                     GameTimer.Stop();
                     MessageBox.Show($"Game Over \n" +
                         $"Votre score est de : {score}");
+                    
                 }
             }
 
