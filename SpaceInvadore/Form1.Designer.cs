@@ -45,7 +45,7 @@
             // player
             // 
             player.Image = ZombiesInvader.Properties.Resources.up;
-            player.Location = new Point(509, 472);
+            player.Location = new Point(457, 616);
             player.Name = "player";
             player.Size = new Size(71, 100);
             player.SizeMode = PictureBoxSizeMode.AutoSize;
@@ -63,12 +63,13 @@
             AutoScaleDimensions = new SizeF(11F, 22F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.SlateGray;
-            ClientSize = new Size(1076, 655);
+            ClientSize = new Size(978, 744);
             Controls.Add(player);
             Controls.Add(flowLayoutPanel1);
             Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point);
             Name = "ZombieGame";
             Text = "Zombie Game";
+            Load += ZombieGame_Load;
             KeyDown += KeyIsDown;
             KeyUp += KeyIsUp;
             ((System.ComponentModel.ISupportInitialize)player).EndInit();

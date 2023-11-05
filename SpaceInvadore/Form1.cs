@@ -1,11 +1,17 @@
+using ZombiesInvader;
+
 namespace SpaceInvadore
 {
     public partial class ZombieGame : Form
     {
+        #region constantes
+        int playerSpeed = 10; // vitesse du joueur
+
+        #endregion
+
         #region variables
         string direction = "up"; // direction du joueur
         bool goLeft, goRight, goUp, goDown; // booléens pour savoir si le joueur va dans une direction
-        int playerSpeed = 10; // vitesse du joueur
         int playerLeft; // position du joueur en abscisse
         int playerTop; // position du joueur en ordonnée
         #endregion
@@ -61,6 +67,7 @@ namespace SpaceInvadore
                     player.Image = ZombiesInvader.Properties.Resources.right;
                     break;
                 case Keys.Space:
+                    ShootBullet(direction);
                     break;
             }
         }
@@ -86,6 +93,20 @@ namespace SpaceInvadore
             {
                 player.Top += playerSpeed; // on déplace le joueur vers le bas
             }
+
+        }
+
+        private void ShootBullet(string direction)
+        {
+            Bullet bullet = new Bullet(); // on crée une nouvelle balle
+            bullet.bulletLeft = playerLeft + (player.Width / 2); // on place la balle au centre du joueur en abscisse
+            bullet.bulletTop = playerTop + (player.Height / 2); // on place la balle au centre du joueur en ordonnée
+            bullet.bulletDirection = direction; // on donne la direction de la balle
+            bullet.BuilderBullet(this); // on ajoute la balle au form
+        }
+
+        private void ZombieGame_Load(object sender, EventArgs e)
+        {
 
         }
     }
