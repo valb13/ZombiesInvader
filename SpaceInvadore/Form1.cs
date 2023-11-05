@@ -99,12 +99,14 @@ namespace SpaceInvadore
                     player.Top += playerSpeed; // on déplace le joueur vers le bas
                 }
 
-                if(zombies.Count() < 4)
+                if (zombies.Count() < 4)
                 {
                     ZombieSpawn();
                 }
+
+                ZombieMove();
             }
-            
+
 
         }
 
@@ -119,7 +121,7 @@ namespace SpaceInvadore
 
         private void ZombieGame_Load(object sender, EventArgs e)
         {
-            
+
 
         }
 
@@ -129,10 +131,10 @@ namespace SpaceInvadore
             int top = random.Next(20, this.ClientSize.Height - 20); // position en ordonnée du zombie
 
             PictureBox zombos = new PictureBox(); // création d'une picturebox pour mettre un zombie sur la carte
-            zombos.SizeMode = PictureBoxSizeMode.AutoSize; // on adapte la taille de la picturebox à l'image du zombie
+            zombos.SizeMode = PictureBoxSizeMode.AutoSize; // on adapte la taille de la picturebox à l'image
             zombos.Tag = "zombie"; // tag du zombie
 
-            if(left < playerLeft) // si le zombie est à gauche du joueur
+            if (left < playerLeft) // si le zombie est à gauche du joueur
             {
                 zombos.Image = ZombiesInvader.Properties.Resources.zleft; // on met l'image du zombie qui va à gauche
                 zombos.Left = left - 20; // on place le zombie à gauche du joueur
@@ -158,6 +160,32 @@ namespace SpaceInvadore
 
         }
 
+        private void ZombieMove()
+        {
 
+            foreach (PictureBox zombie in zombies)
+            {
+                if (zombie.Left < playerLeft) // si le zombie est à gauche du joueur
+                {
+                    zombie.Left += 1; // on déplace le zombie vers la droite
+                    zombie.Image = ZombiesInvader.Properties.Resources.zright; // on met l'image du zombie qui va à droite
+                }
+                if (zombie.Left > playerLeft) // si le zombie est à droite du joueur
+                {
+                    zombie.Left -= 1; // on déplace le zombie vers la gauche
+                    zombie.Image = ZombiesInvader.Properties.Resources.zleft; // on met l'image du zombie qui va à gauche
+                }
+                if (zombie.Top < playerTop) // si le zombie est au dessus du joueur
+                {
+                    zombie.Top += 1; // on déplace le zombie vers le bas
+                    zombie.Image = ZombiesInvader.Properties.Resources.zdown; // on met l'image du zombie qui va en bas
+                }
+                if (zombie.Top > playerTop) // si le zombie est en dessous du joueur
+                {
+                    zombie.Top -= 1; // on déplace le zombie vers le haut
+                    zombie.Image = ZombiesInvader.Properties.Resources.zup; // on met l'image du zombie qui va en haut
+                }
+            }
+        }
     }
 }
