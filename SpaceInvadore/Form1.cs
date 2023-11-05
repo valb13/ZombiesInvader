@@ -12,8 +12,11 @@ namespace SpaceInvadore
         #region variables
         string direction = "up"; // direction du joueur
         bool goLeft, goRight, goUp, goDown; // booléens pour savoir si le joueur va dans une direction
+        bool gameOver = false; // booléen pour savoir si le joueur est mort
         int playerLeft; // position du joueur en abscisse
         int playerTop; // position du joueur en ordonnée
+        Random random = new Random(); // générateur de nombre aléatoire
+        List<PictureBox> zombies = new List<PictureBox>(); // liste des zombies
         #endregion
 
 
@@ -74,25 +77,34 @@ namespace SpaceInvadore
 
         private void GameTimer_Tick(object sender, EventArgs e)
         {
-            playerLeft = player.Left; // on récupère la position du joueur en abscisse
-            playerTop = player.Top; // on récupère la position du joueur en ordonnée
+            if (!gameOver)
+            {
+                playerLeft = player.Left; // on récupère la position du joueur en abscisse
+                playerTop = player.Top; // on récupère la position du joueur en ordonnée
 
-            if (goLeft == true && playerLeft > 0) // si le joueur va à gauche et qu'il n'est pas au bord de l'écran
-            {
-                player.Left -= playerSpeed; // on déplace le joueur vers la gauche
+                if (goLeft == true && playerLeft > 0) // si le joueur va à gauche et qu'il n'est pas au bord de l'écran
+                {
+                    player.Left -= playerSpeed; // on déplace le joueur vers la gauche
+                }
+                if (goRight == true && playerLeft + player.Width < this.ClientSize.Width) // si le joueur va à droite et qu'il n'est pas au bord de l'écran
+                {
+                    player.Left += playerSpeed; // on déplace le joueur vers la droite
+                }
+                if (goUp == true && playerTop > 45) // si le joueur va en haut et qu'il n'est pas au bord de l'écran
+                {
+                    player.Top -= playerSpeed; // on déplace le joueur vers le haut
+                }
+                if (goDown == true && playerTop + player.Height < this.ClientSize.Height) // si le joueur va en bas et qu'il n'est pas au bord de l'écran
+                {
+                    player.Top += playerSpeed; // on déplace le joueur vers le bas
+                }
+
+                if(zombies.Count() < 4)
+                {
+                    ZombieSpawn();
+                }
             }
-            if (goRight == true && playerLeft + player.Width < this.ClientSize.Width) // si le joueur va à droite et qu'il n'est pas au bord de l'écran
-            {
-                player.Left += playerSpeed; // on déplace le joueur vers la droite
-            }
-            if (goUp == true && playerTop > 45) // si le joueur va en haut et qu'il n'est pas au bord de l'écran
-            {
-                player.Top -= playerSpeed; // on déplace le joueur vers le haut
-            }
-            if (goDown == true && playerTop + player.Height < this.ClientSize.Height) // si le joueur va en bas et qu'il n'est pas au bord de l'écran
-            {
-                player.Top += playerSpeed; // on déplace le joueur vers le bas
-            }
+            
 
         }
 
@@ -107,7 +119,45 @@ namespace SpaceInvadore
 
         private void ZombieGame_Load(object sender, EventArgs e)
         {
+            
 
         }
+
+        private void ZombieSpawn()
+        {
+            int left = random.Next(20, this.ClientSize.Width - 20); // position en abscisse du zombie 
+            int top = random.Next(20, this.ClientSize.Height - 20); // position en ordonnée du zombie
+
+            PictureBox zombos = new PictureBox(); // création d'une picturebox pour mettre un zombie sur la carte
+            zombos.SizeMode = PictureBoxSizeMode.AutoSize; // on adapte la taille de la picturebox à l'image du zombie
+            zombos.Tag = "zombie"; // tag du zombie
+
+            if(left < playerLeft) // si le zombie est à gauche du joueur
+            {
+                zombos.Image = ZombiesInvader.Properties.Resources.zleft; // on met l'image du zombie qui va à gauche
+                zombos.Left = left - 20; // on place le zombie à gauche du joueur
+            }
+            if (left > playerLeft) // si le zombie est à droite du joueur
+            {
+                zombos.Image = ZombiesInvader.Properties.Resources.zright; // on met l'image du zombie qui va à droite
+                zombos.Left = left + 20; // on place le zombie à droite du joueur
+            }
+            if (top < playerTop) // si le zombie est au dessus du joueur
+            {
+                zombos.Image = ZombiesInvader.Properties.Resources.zup; // on met l'image du zombie qui va en haut
+                zombos.Top = top - 20; // on place le zombie au dessus du joueur
+            }
+            if (top > playerTop) // si le zombie est en dessous du joueur
+            {
+                zombos.Image = ZombiesInvader.Properties.Resources.zdown; // on met l'image du zombie qui va en bas
+                zombos.Top = top + 20; // on place le zombie en dessous du joueur
+            }
+
+            zombies.Add(zombos); // on ajoute le zombie à la liste des zombies
+            this.Controls.Add(zombos); // on ajoute le zombie sur la carte
+
+        }
+
+
     }
 }
