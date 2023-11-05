@@ -282,7 +282,8 @@ namespace SpaceInvadore
                 {
                     gameOver = true;
                     GameTimer.Stop();
-                    MessageBox.Show("Game Over");
+                    MessageBox.Show($"Game Over \n" +
+                        $"Votre score est de : {score}");
                 }
             }
 
