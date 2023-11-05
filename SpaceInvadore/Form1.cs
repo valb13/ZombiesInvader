@@ -105,6 +105,8 @@ namespace SpaceInvadore
                 }
 
                 ZombieMove();
+
+                DispawnZombie();
             }
 
 
@@ -216,12 +218,33 @@ namespace SpaceInvadore
                     {
                         picture.Top += 1;
                     }
-                    
-                   
+                                  
                 }
             }
 
             return collision;
+        }
+
+        private void DispawnZombie()
+        {
+            foreach (var c in this.Controls)
+            {
+                if (c is PictureBox && ((PictureBox)c).Tag == "zombie")
+                {
+                    foreach (var x in this.Controls)
+                    {
+                        if(x is PictureBox && ((PictureBox)x).Tag == "bullet")
+                        {
+                            if (((PictureBox)c).Bounds.IntersectsWith(((PictureBox)x).Bounds))
+                            {
+                                this.Controls.Remove((PictureBox)c);
+                                this.Controls.Remove((PictureBox)x);
+                                zombies.Remove((PictureBox)c);
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
