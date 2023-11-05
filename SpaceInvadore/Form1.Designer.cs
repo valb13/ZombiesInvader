@@ -33,6 +33,7 @@
             player = new PictureBox();
             GameTimer = new System.Windows.Forms.Timer(components);
             lblScore = new Label();
+            pnlSpawnZone = new Panel();
             ((System.ComponentModel.ISupportInitialize)player).BeginInit();
             SuspendLayout();
             // 
@@ -70,12 +71,22 @@
             lblScore.TabIndex = 3;
             lblScore.Text = "Score : 0";
             // 
+            // pnlSpawnZone
+            // 
+            pnlSpawnZone.BackColor = Color.DarkTurquoise;
+            pnlSpawnZone.Location = new Point(581, 598);
+            pnlSpawnZone.Name = "pnlSpawnZone";
+            pnlSpawnZone.Size = new Size(110, 110);
+            pnlSpawnZone.TabIndex = 4;
+            pnlSpawnZone.Visible = false;
+            // 
             // ZombieGame
             // 
             AutoScaleDimensions = new SizeF(11F, 22F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.SlateGray;
             ClientSize = new Size(978, 744);
+            Controls.Add(pnlSpawnZone);
             Controls.Add(lblScore);
             Controls.Add(player);
             Controls.Add(flowLayoutPanel1);
@@ -96,5 +107,6 @@
         private PictureBox player;
         private System.Windows.Forms.Timer GameTimer;
         private Label lblScore;
+        private Panel pnlSpawnZone;
     }
 }

@@ -81,6 +81,7 @@ namespace SpaceInvadore
         {
             if (!gameOver)
             {
+
                 playerLeft = player.Left; // on récupère la position du joueur en abscisse
                 playerTop = player.Top; // on récupère la position du joueur en ordonnée
 
@@ -101,6 +102,8 @@ namespace SpaceInvadore
                     player.Top += playerSpeed; // on déplace le joueur vers le bas
                 }
 
+                SetSpawnZone(); // on créer la zone anti spawn autour du joueur
+
                 if (zombies.Count() < 4)
                 {
                     ZombieSpawn(); // on fait apparaitre un zombie si il y en a moins de 4 sur la carte
@@ -109,7 +112,7 @@ namespace SpaceInvadore
                 ZombieMove(); // on déplace les zombies
 
                 DispawnZombie(); // on vérifie si une balle à touchée un zombie
-                GameOver();
+                GameOver(); // on vérifie si la partie est finie 
             }
 
 
@@ -131,7 +134,7 @@ namespace SpaceInvadore
 
         private void ZombieGame_Load(object sender, EventArgs e)
         {
-
+           
 
         }
 
@@ -150,7 +153,7 @@ namespace SpaceInvadore
             zombos.SizeMode = PictureBoxSizeMode.AutoSize; // on adapte la taille de la picturebox à l'image
             zombos.Tag = "zombie"; // tag du zombie
 
-           
+
 
             if (left < playerLeft) // si le zombie est à gauche du joueur
             {
@@ -176,7 +179,7 @@ namespace SpaceInvadore
             zombies.Add(zombos); // on ajoute le zombie à la liste des zombies
             this.Controls.Add(zombos); // on ajoute le zombie sur la carte
 
-            if (zombos.Bounds.IntersectsWith(player.Bounds)) // sécurité pour ne pas mourir à l'apparition d'un zombie
+            if (zombos.Bounds.IntersectsWith(pnlSpawnZone.Bounds)) // sécurité pour ne pas mourir à l'apparition d'un zombie
             {
                 zombos.Left = 10;
                 zombos.Top = 10;
@@ -287,9 +290,9 @@ namespace SpaceInvadore
 
         public void GameOver()
         {
-            foreach(var z in zombies)
+            foreach (var z in zombies)
             {
-                if(z.Bounds.IntersectsWith(player.Bounds))
+                if (z.Bounds.IntersectsWith(player.Bounds))
                 {
                     gameOver = true;
                     GameTimer.Stop();
@@ -307,6 +310,15 @@ namespace SpaceInvadore
                 }
             }
 
+        }
+
+        private void SetSpawnZone() // créer une zone de non spawn pour les zombies autour du joueur
+        {
+            pnlSpawnZone.Width = player.Width + 60;
+            pnlSpawnZone.Height = player.Height + 60;
+
+            pnlSpawnZone.Left = player.Left - 30;
+            pnlSpawnZone.Top = player.Top - 30;
         }
     }
 }
