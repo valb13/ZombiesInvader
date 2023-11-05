@@ -165,27 +165,63 @@ namespace SpaceInvadore
 
             foreach (PictureBox zombie in zombies)
             {
-                if (zombie.Left < playerLeft) // si le zombie est à gauche du joueur
+                if (!Collision(zombie))
                 {
-                    zombie.Left += 1; // on déplace le zombie vers la droite
-                    zombie.Image = ZombiesInvader.Properties.Resources.zright; // on met l'image du zombie qui va à droite
-                }
-                if (zombie.Left > playerLeft) // si le zombie est à droite du joueur
+                    if (zombie.Left < playerLeft) // si le zombie est à gauche du joueur
+                    {
+                        zombie.Left += 1; // on déplace le zombie vers la droite
+                        zombie.Image = ZombiesInvader.Properties.Resources.zright; // on met l'image du zombie qui va à droite
+                    }
+                    if (zombie.Left > playerLeft) // si le zombie est à droite du joueur
+                    {
+                        zombie.Left -= 1; // on déplace le zombie vers la gauche
+                        zombie.Image = ZombiesInvader.Properties.Resources.zleft; // on met l'image du zombie qui va à gauche
+                    }
+                    if (zombie.Top < playerTop) // si le zombie est au dessus du joueur
+                    {
+                        zombie.Top += 1; // on déplace le zombie vers le bas
+                        zombie.Image = ZombiesInvader.Properties.Resources.zdown; // on met l'image du zombie qui va en bas
+                    }
+                    if (zombie.Top > playerTop) // si le zombie est en dessous du joueur
+                    {
+                        zombie.Top -= 1; // on déplace le zombie vers le haut
+                        zombie.Image = ZombiesInvader.Properties.Resources.zup; // on met l'image du zombie qui va en haut
+                    }
+                }              
+            }
+        }
+
+        private bool Collision(PictureBox picture)
+        {
+            bool collision = false;
+
+            foreach(var zombie in zombies)
+            {
+                if (picture.Bounds.IntersectsWith(zombie.Bounds) && zombie != picture)
                 {
-                    zombie.Left -= 1; // on déplace le zombie vers la gauche
-                    zombie.Image = ZombiesInvader.Properties.Resources.zleft; // on met l'image du zombie qui va à gauche
-                }
-                if (zombie.Top < playerTop) // si le zombie est au dessus du joueur
-                {
-                    zombie.Top += 1; // on déplace le zombie vers le bas
-                    zombie.Image = ZombiesInvader.Properties.Resources.zdown; // on met l'image du zombie qui va en bas
-                }
-                if (zombie.Top > playerTop) // si le zombie est en dessous du joueur
-                {
-                    zombie.Top -= 1; // on déplace le zombie vers le haut
-                    zombie.Image = ZombiesInvader.Properties.Resources.zup; // on met l'image du zombie qui va en haut
+                    collision = true;
+                    if(picture.Left > 1 && picture.Left < zombie.Left)
+                    {
+                        picture.Left -= 1;
+
+                    } else if(picture.Left < this.ClientSize.Width - 5 && picture.Left > zombie.Left)
+                    {
+                        picture.Left += 1;
+
+                    } else if(picture.Top > 5 && picture.Top < zombie.Top)
+                    {
+                        picture.Top -= 1;
+
+                    } else if(picture.Top < this.ClientSize.Height - 5 && picture.Top > zombie.Top)
+                    {
+                        picture.Top += 1;
+                    }
+                    
+                   
                 }
             }
+
+            return collision;
         }
     }
 }
