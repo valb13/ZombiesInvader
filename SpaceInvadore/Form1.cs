@@ -6,7 +6,6 @@ namespace SpaceInvadore
     {
         #region constantes
         int playerSpeed = 10; // vitesse du joueur
-
         #endregion
 
         #region variables
@@ -101,17 +100,22 @@ namespace SpaceInvadore
 
                 if (zombies.Count() < 4)
                 {
-                    ZombieSpawn();
+                    ZombieSpawn(); // on fait apparaitre un zombie si il y en a moins de 4 sur la carte
                 }
 
-                ZombieMove();
+                ZombieMove(); // on déplace les zombies
 
-                DispawnZombie();
+                DispawnZombie(); // on vérifie si une balle à touchée un zombie
             }
 
 
         }
 
+
+        /// <summary>
+        /// fonction qui permet de tirer une balle
+        /// </summary>
+        /// <param name="direction"></param>
         private void ShootBullet(string direction)
         {
             Bullet bullet = new Bullet(); // on crée une nouvelle balle
@@ -127,6 +131,9 @@ namespace SpaceInvadore
 
         }
 
+        /// <summary>
+        /// fonction qui permet de faire apparaitre des zombies aléatoirement sur la carte
+        /// </summary>
         private void ZombieSpawn()
         {
             int left = random.Next(20, this.ClientSize.Width - 20); // position en abscisse du zombie 
@@ -162,6 +169,9 @@ namespace SpaceInvadore
 
         }
 
+        /// <summary>
+        /// fonction qui permet de déplacer les zombies vers player
+        /// </summary>
         private void ZombieMove()
         {
 
@@ -193,53 +203,61 @@ namespace SpaceInvadore
             }
         }
 
-        private bool Collision(PictureBox picture)
+        /// <summary>
+        /// fonction qui permet de gérer les collisions entre les zombies
+        /// </summary>
+        /// <param name="picture"></param>
+        /// <returns></returns>
+        private bool Collision(PictureBox picture) 
         {
-            bool collision = false;
+            bool collision = false; // initialisation de la valeur retournée
 
-            foreach(var zombie in zombies)
+            foreach(var zombie in zombies) // pour chaque zombie de la map
             {
-                if (picture.Bounds.IntersectsWith(zombie.Bounds) && zombie != picture)
+                if (picture.Bounds.IntersectsWith(zombie.Bounds) && zombie != picture) // si le zombie touche un autre zombie
                 {
-                    collision = true;
-                    if(picture.Left > 1 && picture.Left < zombie.Left)
+                    collision = true; // il y a collision
+                    if(picture.Left > 1 && picture.Left < zombie.Left) // si le zombie est à gauche du zombie touché
                     {
-                        picture.Left -= 1;
+                        picture.Left -= 1; // on déplace le zombie vers la gauche
 
-                    } else if(picture.Left < this.ClientSize.Width - 5 && picture.Left > zombie.Left)
+                    } else if(picture.Left < this.ClientSize.Width - 5 && picture.Left > zombie.Left) // si le zombie est à droite du zombie touché
                     {
-                        picture.Left += 1;
+                        picture.Left += 1; // on déplace le zombie vers la droite
 
-                    } else if(picture.Top > 5 && picture.Top < zombie.Top)
+                    } else if(picture.Top > 5 && picture.Top < zombie.Top) // si le zombie est au dessus du zombie touché
                     {
-                        picture.Top -= 1;
+                        picture.Top -= 1; // on déplace le zombie vers le haut
 
-                    } else if(picture.Top < this.ClientSize.Height - 5 && picture.Top > zombie.Top)
+                    } else if(picture.Top < this.ClientSize.Height - 5 && picture.Top > zombie.Top) // si le zombie est en dessous du zombie touché
                     {
-                        picture.Top += 1;
+                        picture.Top += 1; // on déplace le zombie vers le bas
                     }
                                   
                 }
             }
 
-            return collision;
+            return collision; // on retourne la valeur de collision
         }
 
+        /// <summary>
+        /// fonction qui permet de supprimer les zombies et les balles quand ils se touchent
+        /// </summary>
         private void DispawnZombie()
         {
-            foreach (var c in this.Controls)
+            foreach (var c in this.Controls) // pour chaque objet du form
             {
-                if (c is PictureBox && ((PictureBox)c).Tag == "zombie")
+                if (c is PictureBox && ((PictureBox)c).Tag == "zombie") // si l'objet est un zombie
                 {
-                    foreach (var x in this.Controls)
+                    foreach (var x in this.Controls) // pour chaque objet du form 
                     {
-                        if(x is PictureBox && ((PictureBox)x).Tag == "bullet")
+                        if(x is PictureBox && ((PictureBox)x).Tag == "bullet") // si l'objet est une balle
                         {
-                            if (((PictureBox)c).Bounds.IntersectsWith(((PictureBox)x).Bounds))
+                            if (((PictureBox)c).Bounds.IntersectsWith(((PictureBox)x).Bounds)) // si le zombie touche la balle
                             {
-                                this.Controls.Remove((PictureBox)c);
-                                this.Controls.Remove((PictureBox)x);
-                                zombies.Remove((PictureBox)c);
+                                this.Controls.Remove((PictureBox)c); // on supprime le zombie
+                                this.Controls.Remove((PictureBox)x); // on supprime la balle
+                                zombies.Remove((PictureBox)c); // on supprime le zombie de la liste des zombies
                             }
                         }
                     }
