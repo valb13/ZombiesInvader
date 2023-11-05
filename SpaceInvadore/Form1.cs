@@ -107,6 +107,7 @@ namespace SpaceInvadore
                 ZombieMove(); // on déplace les zombies
 
                 DispawnZombie(); // on vérifie si une balle à touchée un zombie
+                GameOver();
             }
 
 
@@ -271,6 +272,20 @@ namespace SpaceInvadore
                     }
                 }
             }
+        }
+
+        public void GameOver()
+        {
+            foreach(var z in zombies)
+            {
+                if(z.Bounds.IntersectsWith(player.Bounds))
+                {
+                    gameOver = true;
+                    GameTimer.Stop();
+                    MessageBox.Show("Game Over");
+                }
+            }
+
         }
     }
 }
