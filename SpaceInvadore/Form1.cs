@@ -14,6 +14,7 @@ namespace SpaceInvadore
         bool gameOver = false; // booléen pour savoir si le joueur est mort
         int playerLeft; // position du joueur en abscisse
         int playerTop; // position du joueur en ordonnée
+        int score = 0; // score du joueur
         Random random = new Random(); // générateur de nombre aléatoire
         List<PictureBox> zombies = new List<PictureBox>(); // liste des zombies
         #endregion
@@ -136,8 +137,10 @@ namespace SpaceInvadore
         /// </summary>
         private void ZombieSpawn()
         {
+
             int left = random.Next(20, this.ClientSize.Width - 20); // position en abscisse du zombie 
             int top = random.Next(20, this.ClientSize.Height - 20); // position en ordonnée du zombie
+
 
             PictureBox zombos = new PictureBox(); // création d'une picturebox pour mettre un zombie sur la carte
             zombos.SizeMode = PictureBoxSizeMode.AutoSize; // on adapte la taille de la picturebox à l'image
@@ -175,9 +178,9 @@ namespace SpaceInvadore
         private void ZombieMove()
         {
 
-            foreach (PictureBox zombie in zombies)
+            foreach (PictureBox zombie in zombies) // tous les zombies de la carte
             {
-                if (!Collision(zombie))
+                if (!Collision(zombie)) // si il n'y a pas de collision on déplace le zombie
                 {
                     if (zombie.Left < playerLeft) // si le zombie est à gauche du joueur
                     {
@@ -199,7 +202,7 @@ namespace SpaceInvadore
                         zombie.Top -= 1; // on déplace le zombie vers le haut
                         zombie.Image = ZombiesInvader.Properties.Resources.zup; // on met l'image du zombie qui va en haut
                     }
-                }              
+                }
             }
         }
 
@@ -208,32 +211,35 @@ namespace SpaceInvadore
         /// </summary>
         /// <param name="picture"></param>
         /// <returns></returns>
-        private bool Collision(PictureBox picture) 
+        private bool Collision(PictureBox picture)
         {
             bool collision = false; // initialisation de la valeur retournée
 
-            foreach(var zombie in zombies) // pour chaque zombie de la map
+            foreach (var zombie in zombies) // pour chaque zombie de la map
             {
                 if (picture.Bounds.IntersectsWith(zombie.Bounds) && zombie != picture) // si le zombie touche un autre zombie
                 {
                     collision = true; // il y a collision
-                    if(picture.Left > 1 && picture.Left < zombie.Left) // si le zombie est à gauche du zombie touché
+                    if (picture.Left > 1 && picture.Left < zombie.Left) // si le zombie est à gauche du zombie touché
                     {
                         picture.Left -= 1; // on déplace le zombie vers la gauche
 
-                    } else if(picture.Left < this.ClientSize.Width - 5 && picture.Left > zombie.Left) // si le zombie est à droite du zombie touché
+                    }
+                    else if (picture.Left < this.ClientSize.Width - 5 && picture.Left > zombie.Left) // si le zombie est à droite du zombie touché
                     {
                         picture.Left += 1; // on déplace le zombie vers la droite
 
-                    } else if(picture.Top > 5 && picture.Top < zombie.Top) // si le zombie est au dessus du zombie touché
+                    }
+                    else if (picture.Top > 5 && picture.Top < zombie.Top) // si le zombie est au dessus du zombie touché
                     {
                         picture.Top -= 1; // on déplace le zombie vers le haut
 
-                    } else if(picture.Top < this.ClientSize.Height - 5 && picture.Top > zombie.Top) // si le zombie est en dessous du zombie touché
+                    }
+                    else if (picture.Top < this.ClientSize.Height - 5 && picture.Top > zombie.Top) // si le zombie est en dessous du zombie touché
                     {
                         picture.Top += 1; // on déplace le zombie vers le bas
                     }
-                                  
+
                 }
             }
 
@@ -251,10 +257,12 @@ namespace SpaceInvadore
                 {
                     foreach (var x in this.Controls) // pour chaque objet du form 
                     {
-                        if(x is PictureBox && ((PictureBox)x).Tag == "bullet") // si l'objet est une balle
+                        if (x is PictureBox && ((PictureBox)x).Tag == "bullet") // si l'objet est une balle
                         {
                             if (((PictureBox)c).Bounds.IntersectsWith(((PictureBox)x).Bounds)) // si le zombie touche la balle
                             {
+                                score++;
+                                lblScore.Text = "Score : " + score; // on affiche le score
                                 this.Controls.Remove((PictureBox)c); // on supprime le zombie
                                 this.Controls.Remove((PictureBox)x); // on supprime la balle
                                 zombies.Remove((PictureBox)c); // on supprime le zombie de la liste des zombies
