@@ -102,6 +102,8 @@ namespace SpaceInvadore
                     player.Top += playerSpeed; // on déplace le joueur vers le bas
                 }
 
+                lblScore.Left = this.ClientSize.Width / 2 - lblScore.Width / 2; // on place le score au centre de l'écran
+
                 SetSpawnZone(); // on créer la zone anti spawn autour du joueur
 
                 if (zombies.Count() < 4)
