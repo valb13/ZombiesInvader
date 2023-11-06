@@ -89,8 +89,20 @@ namespace SpaceInvadore
 
         private void GameTimer_Tick(object sender, EventArgs e)
         {
-            lblScore.Left = this.ClientSize.Width / 2 - lblScore.Width / 2; // on place le score au centre de l'écran
-            lblWave.Left = this.ClientSize.Width / 2 - lblWave.Width / 2; // on place le numéro de la vague au centre de l'écran
+            // on place le score au centre en haut de l'écran 
+            lblScore.Top = 20;
+            lblScore.Left = this.ClientSize.Width / 2 - lblScore.Width / 2; 
+
+            // on place le numéro de la vague au centre de l'écran
+            lblWave.Left = this.ClientSize.Width / 2 - lblWave.Width / 2; 
+            lblWave.Top = this.ClientSize.Height / 2 - lblWave.Height / 2; 
+
+            // on place la barre de vie a droite en haut de l'écran
+            healthbar.Top = 20;
+            healthbar.Left = this.ClientSize.Width - 40 - healthbar.Width; 
+
+            player.Left = this.ClientSize.Width / 2 - player.Width / 2;
+            player.Top = this.ClientSize.Height - 40 - player.Height;
 
             if (firstrender)
             {
