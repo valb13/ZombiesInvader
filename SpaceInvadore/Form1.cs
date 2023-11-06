@@ -17,6 +17,10 @@ namespace SpaceInvadore
         int playerLeft; // position du joueur en abscisse
         int playerTop; // position du joueur en ordonnée
         int score = 0; // score du joueur
+        int wave = 1; // vague de zombies
+        bool wavewait = false; // booléen pour savoir si on est entre deux vagues
+        bool firstrender = true; // booléen pour savoir si c'est le premier rendu
+        int zombiesSpawn = 0; // nombre de zombies apparus
         Random random = new Random(); // générateur de nombre aléatoire
         List<PictureBox> zombies = new List<PictureBox>(); // liste des zombies
         #endregion
@@ -73,13 +77,31 @@ namespace SpaceInvadore
                     break;
                 case Keys.Space:
                     ShootBullet(direction);
+                    if (wavewait == true)
+                    {
+                        wavewait = false;
+                        lblWave.Visible = false;
+                    }
                     break;
             }
         }
 
         private void GameTimer_Tick(object sender, EventArgs e)
         {
-            if (!gameOver)
+            lblScore.Left = this.ClientSize.Width / 2 - lblScore.Width / 2; // on place le score au centre de l'écran
+            lblWave.Left = this.ClientSize.Width / 2 - lblWave.Width / 2; // on place le numéro de la vague au centre de l'écran
+
+            if (firstrender)
+            {
+
+                lblWave.Text = "press space"; // on affiche le démarage du jeu 
+                lblWave.Visible = true; // on rend le numéro de la vague visible
+                wavewait = true; // on attends que le joueur appuie pour lancer la vague
+                firstrender = false;
+            }
+
+
+            if (!gameOver && !wavewait)
             {
 
                 playerLeft = player.Left; // on récupère la position du joueur en abscisse
@@ -101,14 +123,22 @@ namespace SpaceInvadore
                 {
                     player.Top += playerSpeed; // on déplace le joueur vers le bas
                 }
-
-                lblScore.Left = this.ClientSize.Width / 2 - lblScore.Width / 2; // on place le score au centre de l'écran
-
+               
                 SetSpawnZone(); // on créer la zone anti spawn autour du joueur
 
-                if (zombies.Count() < 4)
+                if (zombies.Count() < wave && zombiesSpawn < (wave * 10) + (wave * 4))
                 {
-                    ZombieSpawn(); // on fait apparaitre un zombie si il y en a moins de 4 sur la carte
+                    ZombieSpawn(); // on fait apparaitre un zombie en focntion de la vague et du nombre de zombies
+                    zombiesSpawn++; // on incrémente le nombre de zombies apparus
+
+                }
+                else if (score == (wave * 10) + wave * 4) // si le joueur a tué tous les zombies de la vague
+                {
+                    wave++;
+                    lblWave.Text = "Vague : " + wave; // on affiche le numéro de la vague
+                    lblWave.Visible = true; // on rend le numéro de la vague visible
+                    wavewait = true;
+
                 }
 
                 ZombieMove(); // on déplace les zombies
@@ -136,7 +166,7 @@ namespace SpaceInvadore
 
         private void ZombieGame_Load(object sender, EventArgs e)
         {
-           
+
 
         }
 

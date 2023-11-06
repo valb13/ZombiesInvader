@@ -34,6 +34,7 @@
             GameTimer = new System.Windows.Forms.Timer(components);
             lblScore = new Label();
             pnlSpawnZone = new Panel();
+            lblWave = new Label();
             ((System.ComponentModel.ISupportInitialize)player).BeginInit();
             SuspendLayout();
             // 
@@ -67,7 +68,7 @@
             lblScore.ForeColor = SystemColors.ButtonHighlight;
             lblScore.Location = new Point(436, 9);
             lblScore.Name = "lblScore";
-            lblScore.Size = new Size(90, 28);
+            lblScore.Size = new Size(63, 19);
             lblScore.TabIndex = 3;
             lblScore.Text = "Score : 0";
             // 
@@ -80,18 +81,32 @@
             pnlSpawnZone.TabIndex = 4;
             pnlSpawnZone.Visible = false;
             // 
+            // lblWave
+            // 
+            lblWave.AutoSize = true;
+            lblWave.Font = new Font("Arial Rounded MT Bold", 36F, FontStyle.Italic, GraphicsUnit.Point);
+            lblWave.ForeColor = Color.DarkRed;
+            lblWave.Location = new Point(392, 312);
+            lblWave.Name = "lblWave";
+            lblWave.Size = new Size(167, 55);
+            lblWave.TabIndex = 6;
+            lblWave.Text = "label1";
+            lblWave.Visible = false;
+            // 
             // ZombieGame
             // 
-            AutoScaleDimensions = new SizeF(11F, 22F);
+            AutoScaleDimensions = new SizeF(8F, 14F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.SlateGray;
             ClientSize = new Size(978, 744);
+            Controls.Add(lblWave);
             Controls.Add(pnlSpawnZone);
             Controls.Add(lblScore);
             Controls.Add(player);
             Controls.Add(flowLayoutPanel1);
             Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point);
             Name = "ZombieGame";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Zombie Game";
             Load += ZombieGame_Load;
             KeyDown += KeyIsDown;
@@ -108,5 +123,6 @@
         private System.Windows.Forms.Timer GameTimer;
         private Label lblScore;
         private Panel pnlSpawnZone;
+        private Label lblWave;
     }
 }
