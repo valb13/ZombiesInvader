@@ -83,6 +83,10 @@ namespace SpaceInvadore
                         wavewait = false;
                         lblWave.Visible = false;
                     }
+                    if (firstrender)
+                    {
+                        firstrender = false;
+                    }
                     break;
             }
         }
@@ -101,16 +105,19 @@ namespace SpaceInvadore
             healthbar.Top = 20;
             healthbar.Left = this.ClientSize.Width - 40 - healthbar.Width; 
 
-            player.Left = this.ClientSize.Width / 2 - player.Width / 2;
-            player.Top = this.ClientSize.Height - 40 - player.Height;
+           
 
             if (firstrender)
             {
 
+                // on place le joueur au centre en bas de l'écran si c'est la partie n'a pas encore commencé
+                player.Left = this.ClientSize.Width / 2 - player.Width / 2;
+                player.Top = this.ClientSize.Height - 40 - player.Height;
+
                 lblWave.Text = "press space"; // on affiche le démarage du jeu 
                 lblWave.Visible = true; // on rend le numéro de la vague visible
                 wavewait = true; // on attends que le joueur appuie pour lancer la vague
-                firstrender = false;
+               
             }
 
 
