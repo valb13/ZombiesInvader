@@ -211,10 +211,10 @@ namespace SpaceInvadore
             zombies.Add(zombos); // on ajoute le zombie à la liste des zombies
             this.Controls.Add(zombos); // on ajoute le zombie sur la carte
 
-            if (zombos.Bounds.IntersectsWith(pnlSpawnZone.Bounds)) // sécurité pour ne pas mourir à l'apparition d'un zombie
+            while (zombos.Bounds.IntersectsWith(pnlSpawnZone.Bounds)) // sécurité pour ne pas mourir à l'apparition d'un zombie
             {
-                zombos.Left = 10;
-                zombos.Top = 10;
+                zombos.Left = random.Next(20, this.ClientSize.Width - 20); // position en abscisse du zombie 
+                zombos.Top = random.Next(20, this.ClientSize.Height - 20); // position en ordonnée du zombie
             }
 
         }
@@ -346,11 +346,11 @@ namespace SpaceInvadore
 
         private void SetSpawnZone() // créer une zone de non spawn pour les zombies autour du joueur
         {
-            pnlSpawnZone.Width = player.Width + 60;
-            pnlSpawnZone.Height = player.Height + 60;
+            pnlSpawnZone.Width = player.Width + 80;
+            pnlSpawnZone.Height = player.Height + 80;
 
-            pnlSpawnZone.Left = player.Left - 30;
-            pnlSpawnZone.Top = player.Top - 30;
+            pnlSpawnZone.Left = player.Left - 40;
+            pnlSpawnZone.Top = player.Top - 40;
         }
     }
 }
