@@ -21,6 +21,7 @@ namespace SpaceInvadore
         bool wavewait = false; // booléen pour savoir si on est entre deux vagues
         bool firstrender = true; // booléen pour savoir si c'est le premier rendu
         int zombiesSpawn = 0; // nombre de zombies apparus
+        int health = 100; // vie du joueur
         Random random = new Random(); // générateur de nombre aléatoire
         List<PictureBox> zombies = new List<PictureBox>(); // liste des zombies
         #endregion
@@ -123,7 +124,7 @@ namespace SpaceInvadore
                 {
                     player.Top += playerSpeed; // on déplace le joueur vers le bas
                 }
-               
+
                 SetSpawnZone(); // on créer la zone anti spawn autour du joueur
 
                 if (zombies.Count() < wave && zombiesSpawn < (wave * 10) + (wave * 4))
@@ -144,12 +145,15 @@ namespace SpaceInvadore
                 ZombieMove(); // on déplace les zombies
 
                 DispawnZombie(); // on vérifie si une balle à touchée un zombie
-                GameOver(); // on vérifie si la partie est finie 
-            }
 
+            }
 
         }
 
+        private void DammageTimer_Tick(object sender, EventArgs e)
+        {
+            GameOver(); // on vérifie si la partie est finie 
+        }
 
         /// <summary>
         /// fonction qui permet de tirer une balle
@@ -324,21 +328,32 @@ namespace SpaceInvadore
         {
             foreach (var z in zombies)
             {
-                if (z.Bounds.IntersectsWith(player.Bounds))
+                if (z.Bounds.IntersectsWith(player.Bounds)) // on vérifie si un zombie touche le joueur
                 {
-                    gameOver = true;
-                    GameTimer.Stop();
-                    string message = $"Votre score est de : {score}";
-                    string caption = "Game Over";
-                    MessageBoxButtons buttons = MessageBoxButtons.OK;
-                    DialogResult result;
-                    result = MessageBox.Show(message, caption, buttons);
-                    if (result == System.Windows.Forms.DialogResult.OK)
+                    z.BringToFront(); // on met le zombie devant les autres objets
+                    if(health > 0) // si la vie du joueur est suppérieur à 0
                     {
-                        // Closes the parent form.
-                        this.Close();
+                        health -= 25; // on enlève 25 points de vie
                     }
+                    healthbar.Value = health; // on met à jour la barre de vie
 
+
+                    if (health == 0) // si la vie du joueur est à 0
+                    {
+                        gameOver = true; // on indique que la partie est finie
+                        GameTimer.Stop(); // on arrête le timer du jeu
+                        DammageTimer.Stop(); // on arrête le timer des dégats
+                        string message = $"Votre score est de : {score}"; // message de fin de partie
+                        string caption = "Game Over"; // titre de la fenêtre
+                        MessageBoxButtons buttons = MessageBoxButtons.OK; // bouton de la fenêtre
+                        DialogResult result; 
+                        result = MessageBox.Show(message, caption, buttons); // on affiche la fenêtre
+                        if (result == System.Windows.Forms.DialogResult.OK) // si le joueur appuie sur le bouton ok
+                        {
+                            // on ferme le formulaire.
+                            this.Close(); 
+                        }
+                    }
                 }
             }
 
@@ -352,5 +367,7 @@ namespace SpaceInvadore
             pnlSpawnZone.Left = player.Left - 40;
             pnlSpawnZone.Top = player.Top - 40;
         }
+
+
     }
 }

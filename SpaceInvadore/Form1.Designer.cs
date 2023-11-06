@@ -35,6 +35,8 @@
             lblScore = new Label();
             pnlSpawnZone = new Panel();
             lblWave = new Label();
+            healthbar = new ProgressBar();
+            DammageTimer = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)player).BeginInit();
             SuspendLayout();
             // 
@@ -93,12 +95,27 @@
             lblWave.Text = "label1";
             lblWave.Visible = false;
             // 
+            // healthbar
+            // 
+            healthbar.Location = new Point(750, 9);
+            healthbar.Name = "healthbar";
+            healthbar.Size = new Size(216, 23);
+            healthbar.TabIndex = 7;
+            healthbar.Value = 100;
+            // 
+            // DammageTimer
+            // 
+            DammageTimer.Enabled = true;
+            DammageTimer.Interval = 500;
+            DammageTimer.Tick += DammageTimer_Tick;
+            // 
             // ZombieGame
             // 
             AutoScaleDimensions = new SizeF(8F, 14F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.SlateGray;
             ClientSize = new Size(978, 744);
+            Controls.Add(healthbar);
             Controls.Add(lblWave);
             Controls.Add(pnlSpawnZone);
             Controls.Add(lblScore);
@@ -124,5 +141,7 @@
         private Label lblScore;
         private Panel pnlSpawnZone;
         private Label lblWave;
+        private ProgressBar healthbar;
+        private System.Windows.Forms.Timer DammageTimer;
     }
 }
