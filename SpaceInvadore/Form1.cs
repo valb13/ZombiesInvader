@@ -22,6 +22,7 @@ namespace SpaceInvadore
         bool firstrender = true; // booléen pour savoir si c'est le premier rendu
         int zombiesSpawn = 0; // nombre de zombies apparus
         int health = 100; // vie du joueur
+        int munitions = 10; // munitions du joueur
         Random random = new Random(); // générateur de nombre aléatoire
         List<PictureBox> zombies = new List<PictureBox>(); // liste des zombies
         #endregion
@@ -77,7 +78,9 @@ namespace SpaceInvadore
                     player.Image = ZombiesInvader.Properties.Resources.right;
                     break;
                 case Keys.Space:
-                    ShootBullet(direction);
+                    munitions -= 1;
+                    if(munitions > 0)
+                        ShootBullet(direction);
                     if (wavewait == true)
                     {
                         wavewait = false;
