@@ -79,9 +79,10 @@ namespace SpaceInvadore
                     player.Image = ZombiesInvader.Properties.Resources.right;
                     break;
                 case Keys.Space:
-                    munitions -= 1;
-                    if (munitions >= 0)
-                        ShootBullet(direction);
+                  
+                    if (munitions > 0 && !wavewait && !firstrender) { 
+                        ShootBullet(direction); } // empêcher le joueur de tirer en dehors du jeu
+                        
                     if (wavewait == true)
                     {
                         wavewait = false;
@@ -108,6 +109,10 @@ namespace SpaceInvadore
             // on place la barre de vie a droite en haut de l'écran
             healthbar.Top = 20;
             healthbar.Left = this.ClientSize.Width - 40 - healthbar.Width;
+
+            lblMuni.Text = "Munitions : " + munitions; // on affiche le nombre de munitions
+            lblMuni.Left = 20; // on place le nombre de munitions à gauche en haut de l'écran
+            lblMuni.Top = 20;
 
 
 
@@ -185,6 +190,7 @@ namespace SpaceInvadore
         /// <param name="direction"></param>
         private void ShootBullet(string direction)
         {
+            munitions -= 1;
             Bullet bullet = new Bullet(); // on crée une nouvelle balle
             bullet.bulletLeft = playerLeft + (player.Width / 2); // on place la balle au centre du joueur en abscisse
             bullet.bulletTop = playerTop + (player.Height / 2); // on place la balle au centre du joueur en ordonnée

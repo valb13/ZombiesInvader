@@ -37,6 +37,7 @@
             lblWave = new Label();
             healthbar = new ProgressBar();
             DammageTimer = new System.Windows.Forms.Timer(components);
+            lblMuni = new Label();
             ((System.ComponentModel.ISupportInitialize)player).BeginInit();
             SuspendLayout();
             // 
@@ -109,12 +110,24 @@
             DammageTimer.Interval = 500;
             DammageTimer.Tick += DammageTimer_Tick;
             // 
+            // lblMuni
+            // 
+            lblMuni.AutoSize = true;
+            lblMuni.Font = new Font("Yu Gothic UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            lblMuni.ForeColor = SystemColors.ControlLightLight;
+            lblMuni.Location = new Point(12, 9);
+            lblMuni.Name = "lblMuni";
+            lblMuni.Size = new Size(98, 19);
+            lblMuni.TabIndex = 8;
+            lblMuni.Text = "Munitions : 10";
+            // 
             // ZombieGame
             // 
             AutoScaleDimensions = new SizeF(8F, 14F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.SlateGray;
             ClientSize = new Size(978, 744);
+            Controls.Add(lblMuni);
             Controls.Add(healthbar);
             Controls.Add(lblWave);
             Controls.Add(pnlSpawnZone);
@@ -144,5 +157,6 @@
         private ProgressBar healthbar;
         private System.Windows.Forms.Timer DammageTimer;
         private PictureBox pictureBox1;
+        private Label lblMuni;
     }
 }
