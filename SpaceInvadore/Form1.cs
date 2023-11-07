@@ -23,6 +23,7 @@ namespace SpaceInvadore
         int zombiesSpawn = 0; // nombre de zombies apparus
         int health = 100; // vie du joueur
         int munitions = 10; // munitions du joueur
+        bool drop = false; // booléen pour savoir si il y a un item sur la carte
         Random random = new Random(); // générateur de nombre aléatoire
         List<PictureBox> zombies = new List<PictureBox>(); // liste des zombies
         #endregion
@@ -79,7 +80,7 @@ namespace SpaceInvadore
                     break;
                 case Keys.Space:
                     munitions -= 1;
-                    if(munitions > 0)
+                    if (munitions >= 0)
                         ShootBullet(direction);
                     if (wavewait == true)
                     {
@@ -98,17 +99,17 @@ namespace SpaceInvadore
         {
             // on place le score au centre en haut de l'écran 
             lblScore.Top = 20;
-            lblScore.Left = this.ClientSize.Width / 2 - lblScore.Width / 2; 
+            lblScore.Left = this.ClientSize.Width / 2 - lblScore.Width / 2;
 
             // on place le numéro de la vague au centre de l'écran
-            lblWave.Left = this.ClientSize.Width / 2 - lblWave.Width / 2; 
-            lblWave.Top = this.ClientSize.Height / 2 - lblWave.Height / 2; 
+            lblWave.Left = this.ClientSize.Width / 2 - lblWave.Width / 2;
+            lblWave.Top = this.ClientSize.Height / 2 - lblWave.Height / 2;
 
             // on place la barre de vie a droite en haut de l'écran
             healthbar.Top = 20;
-            healthbar.Left = this.ClientSize.Width - 40 - healthbar.Width; 
+            healthbar.Left = this.ClientSize.Width - 40 - healthbar.Width;
 
-           
+
 
             if (firstrender)
             {
@@ -120,7 +121,7 @@ namespace SpaceInvadore
                 lblWave.Text = "press space"; // on affiche le démarage du jeu 
                 lblWave.Visible = true; // on rend le numéro de la vague visible
                 wavewait = true; // on attends que le joueur appuie pour lancer la vague
-               
+
             }
 
 
@@ -165,8 +166,9 @@ namespace SpaceInvadore
                 }
 
                 ZombieMove(); // on déplace les zombies
-
                 DispawnZombie(); // on vérifie si une balle à touchée un zombie
+                DropItem(); // on fait apparaitre un item
+                TakeItem(); // on vérifie si le joueur a ramassé un item
 
             }
 
@@ -353,7 +355,7 @@ namespace SpaceInvadore
                 if (z.Bounds.IntersectsWith(player.Bounds)) // on vérifie si un zombie touche le joueur
                 {
                     z.BringToFront(); // on met le zombie devant les autres objets
-                    if(health > 0) // si la vie du joueur est suppérieur à 0
+                    if (health > 0) // si la vie du joueur est suppérieur à 0
                     {
                         health -= 25; // on enlève 25 points de vie
                     }
@@ -368,12 +370,12 @@ namespace SpaceInvadore
                         string message = $"Votre score est de : {score}"; // message de fin de partie
                         string caption = "Game Over"; // titre de la fenêtre
                         MessageBoxButtons buttons = MessageBoxButtons.OK; // bouton de la fenêtre
-                        DialogResult result; 
+                        DialogResult result;
                         result = MessageBox.Show(message, caption, buttons); // on affiche la fenêtre
                         if (result == System.Windows.Forms.DialogResult.OK) // si le joueur appuie sur le bouton ok
                         {
                             // on ferme le formulaire.
-                            this.Close(); 
+                            this.Close();
                         }
                     }
                 }
@@ -390,6 +392,50 @@ namespace SpaceInvadore
             pnlSpawnZone.Top = player.Top - 40;
         }
 
+        /// <summary>
+        /// fonction pour ajouter un item sur la carte
+        /// </summary>
+        private void DropItem()
+        {
+            if (!drop) // si il n'y a pas d'item sur la carte
+            {
+                if (munitions == 0) // si le joueur n'a plus de munitions
+                {
+                    int left = random.Next(20, this.ClientSize.Width - 20); // position en abscisse du zombie 
+                    int top = random.Next(20, this.ClientSize.Height - 20); // position en ordonnée du zombie
 
+                    PictureBox muni = new PictureBox(); // création d'une picturebox pour mettre un zombie sur la carte
+                    muni.SizeMode = PictureBoxSizeMode.AutoSize; // on adapte la taille de la picturebox à l'image
+                    muni.Tag = "munition"; // tag de l'item munition
+                    muni.Left = left; // on place l'item en abscisse
+                    muni.Top = top; // on place l'item en ordonnée
+                    muni.Image = ZombiesInvader.Properties.Resources.ammo_Image; // on met l'image de l'item munition
+                    muni.BringToFront(); // on met l'item devant les autres objets
+                    this.Controls.Add(muni); // on ajoute le zombie sur la carte
+                    drop = true;
+                }
+            }
+           
+        }
+
+        /// <summary>
+        /// fonction pour savoir si le joueur à ramasser un item
+        /// </summary>
+        private void TakeItem()
+        {
+            foreach (var i in this.Controls)
+            {
+                if(i is PictureBox && ((PictureBox)i).Tag == "munition")
+                {
+                    if (((PictureBox)i).Bounds.IntersectsWith(player.Bounds))
+                    {
+                        munitions = 10;
+                        this.Controls.Remove((PictureBox)i);
+                        drop = false;
+                    }
+                }
+            }
+
+        }
     }
 }

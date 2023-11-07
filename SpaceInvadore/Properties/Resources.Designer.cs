@@ -22,7 +22,7 @@ namespace ZombiesInvader.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace ZombiesInvader.Properties {
         ///   Retourne l'instance ResourceManager mise en cache utilisée par cette classe.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ZombiesInvader.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace ZombiesInvader.Properties {
         ///   les recherches de ressources à l'aide de cette classe de ressource fortement typée.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,17 @@ namespace ZombiesInvader.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap dead {
+        public static System.Drawing.Bitmap ammo_Image {
+            get {
+                object obj = ResourceManager.GetObject("ammo_Image", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap dead {
             get {
                 object obj = ResourceManager.GetObject("dead", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -73,7 +83,7 @@ namespace ZombiesInvader.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap down {
+        public static System.Drawing.Bitmap down {
             get {
                 object obj = ResourceManager.GetObject("down", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -83,7 +93,7 @@ namespace ZombiesInvader.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap left {
+        public static System.Drawing.Bitmap left {
             get {
                 object obj = ResourceManager.GetObject("left", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -93,7 +103,7 @@ namespace ZombiesInvader.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap right {
+        public static System.Drawing.Bitmap right {
             get {
                 object obj = ResourceManager.GetObject("right", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -103,7 +113,7 @@ namespace ZombiesInvader.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap up {
+        public static System.Drawing.Bitmap up {
             get {
                 object obj = ResourceManager.GetObject("up", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -113,7 +123,7 @@ namespace ZombiesInvader.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap zdown {
+        public static System.Drawing.Bitmap zdown {
             get {
                 object obj = ResourceManager.GetObject("zdown", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -123,7 +133,7 @@ namespace ZombiesInvader.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap zleft {
+        public static System.Drawing.Bitmap zleft {
             get {
                 object obj = ResourceManager.GetObject("zleft", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -133,7 +143,7 @@ namespace ZombiesInvader.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap zright {
+        public static System.Drawing.Bitmap zright {
             get {
                 object obj = ResourceManager.GetObject("zright", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -143,7 +153,7 @@ namespace ZombiesInvader.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap zup {
+        public static System.Drawing.Bitmap zup {
             get {
                 object obj = ResourceManager.GetObject("zup", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
