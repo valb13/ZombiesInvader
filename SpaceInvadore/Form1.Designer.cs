@@ -37,9 +37,7 @@
             lblWave = new Label();
             healthbar = new ProgressBar();
             DammageTimer = new System.Windows.Forms.Timer(components);
-            pictureBox1 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)player).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // flowLayoutPanel1
@@ -111,21 +109,12 @@
             DammageTimer.Interval = 500;
             DammageTimer.Tick += DammageTimer_Tick;
             // 
-            // pictureBox1
-            // 
-            pictureBox1.Location = new Point(532, 186);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(100, 50);
-            pictureBox1.TabIndex = 8;
-            pictureBox1.TabStop = false;
-            // 
             // ZombieGame
             // 
             AutoScaleDimensions = new SizeF(8F, 14F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.SlateGray;
             ClientSize = new Size(978, 744);
-            Controls.Add(pictureBox1);
             Controls.Add(healthbar);
             Controls.Add(lblWave);
             Controls.Add(pnlSpawnZone);
@@ -140,7 +129,6 @@
             KeyDown += KeyIsDown;
             KeyUp += KeyIsUp;
             ((System.ComponentModel.ISupportInitialize)player).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }

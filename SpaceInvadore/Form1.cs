@@ -415,7 +415,7 @@ namespace SpaceInvadore
                     drop = true;
                 }
             }
-           
+
         }
 
         /// <summary>
@@ -425,7 +425,7 @@ namespace SpaceInvadore
         {
             foreach (var i in this.Controls)
             {
-                if(i is PictureBox && ((PictureBox)i).Tag == "munition")
+                if (i is PictureBox && ((PictureBox)i).Tag == "munition")
                 {
                     if (((PictureBox)i).Bounds.IntersectsWith(player.Bounds))
                     {
