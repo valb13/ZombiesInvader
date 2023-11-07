@@ -24,6 +24,7 @@ namespace SpaceInvadore
         int health = 100; // vie du joueur
         int munitions = 10; // munitions du joueur
         bool drop = false; // booléen pour savoir si il y a un item sur la carte
+        int Lastscore = 0; // score de la dernière fois qu'un item est apparu
         Random random = new Random(); // générateur de nombre aléatoire
         List<PictureBox> zombies = new List<PictureBox>(); // liste des zombies
         #endregion
@@ -405,10 +406,11 @@ namespace SpaceInvadore
         {
             if (!drop) // si il n'y a pas d'item sur la carte
             {
-                if (munitions == 0) // si le joueur n'a plus de munitions
+                if (munitions == 0 || score%5 == 0 && score > 0 && Lastscore != score) // si le joueur n'a plus de munitions ou qu'il a fait 5 kills
                 {
                     int left = random.Next(20, this.ClientSize.Width - 20); // position en abscisse du zombie 
                     int top = random.Next(20, this.ClientSize.Height - 20); // position en ordonnée du zombie
+                    Lastscore = score; // on met à jour le score de la dernière fois qu'un item est apparu
 
                     PictureBox muni = new PictureBox(); // création d'une picturebox pour mettre un zombie sur la carte
                     muni.SizeMode = PictureBoxSizeMode.AutoSize; // on adapte la taille de la picturebox à l'image
