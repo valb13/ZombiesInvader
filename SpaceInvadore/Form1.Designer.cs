@@ -50,6 +50,7 @@
             // 
             // player
             // 
+            player.BackColor = Color.Transparent;
             player.Image = ZombiesInvader.Properties.Resources.up;
             player.Location = new Point(445, 618);
             player.Name = "player";
@@ -87,6 +88,7 @@
             // lblWave
             // 
             lblWave.AutoSize = true;
+            lblWave.BackColor = Color.Transparent;
             lblWave.Font = new Font("Arial Rounded MT Bold", 36F, FontStyle.Italic, GraphicsUnit.Point);
             lblWave.ForeColor = Color.DarkRed;
             lblWave.Location = new Point(392, 312);

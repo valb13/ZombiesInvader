@@ -5,6 +5,8 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZombiesInvader", "SpaceInvadore\ZombiesInvader.csproj", "{5CA75DD5-20E1-4428-A5D0-5C8961203E89}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestZombinvader", "TestZombinvader\TestZombinvader.csproj", "{12CC1E2C-7A76-41AE-A91A-A798A1F4FC02}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{5CA75DD5-20E1-4428-A5D0-5C8961203E89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CA75DD5-20E1-4428-A5D0-5C8961203E89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CA75DD5-20E1-4428-A5D0-5C8961203E89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12CC1E2C-7A76-41AE-A91A-A798A1F4FC02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12CC1E2C-7A76-41AE-A91A-A798A1F4FC02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12CC1E2C-7A76-41AE-A91A-A798A1F4FC02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12CC1E2C-7A76-41AE-A91A-A798A1F4FC02}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -80,10 +80,12 @@ namespace SpaceInvadore
                     player.Image = ZombiesInvader.Properties.Resources.right;
                     break;
                 case Keys.Space:
-                  
-                    if (munitions > 0 && !wavewait && !firstrender) { 
-                        ShootBullet(direction); } // empêcher le joueur de tirer en dehors du jeu
-                        
+
+                    if (munitions > 0 && !wavewait && !firstrender)
+                    {
+                        ShootBullet(direction);
+                    } // empêcher le joueur de tirer en dehors du jeu
+
                     if (wavewait == true)
                     {
                         wavewait = false;
@@ -115,6 +117,8 @@ namespace SpaceInvadore
             lblMuni.Left = 20; // on place le nombre de munitions à gauche en haut de l'écran
             lblMuni.Top = 20;
 
+            player.BackColor = Color.Transparent;
+
 
 
             if (firstrender)
@@ -123,6 +127,7 @@ namespace SpaceInvadore
                 // on place le joueur au centre en bas de l'écran si c'est la partie n'a pas encore commencé
                 player.Left = this.ClientSize.Width / 2 - player.Width / 2;
                 player.Top = this.ClientSize.Height - 40 - player.Height;
+                player.BringToFront();
 
                 lblWave.Text = "press space"; // on affiche le démarage du jeu 
                 lblWave.Visible = true; // on rend le numéro de la vague visible
@@ -139,18 +144,22 @@ namespace SpaceInvadore
 
                 if (goLeft == true && playerLeft > 0) // si le joueur va à gauche et qu'il n'est pas au bord de l'écran
                 {
+                    player.BackColor = Color.Transparent;
                     player.Left -= playerSpeed; // on déplace le joueur vers la gauche
                 }
                 if (goRight == true && playerLeft + player.Width < this.ClientSize.Width) // si le joueur va à droite et qu'il n'est pas au bord de l'écran
                 {
+                    player.BackColor = Color.Transparent;
                     player.Left += playerSpeed; // on déplace le joueur vers la droite
                 }
                 if (goUp == true && playerTop > 45) // si le joueur va en haut et qu'il n'est pas au bord de l'écran
                 {
+                    player.BackColor = Color.Transparent;
                     player.Top -= playerSpeed; // on déplace le joueur vers le haut
                 }
                 if (goDown == true && playerTop + player.Height < this.ClientSize.Height) // si le joueur va en bas et qu'il n'est pas au bord de l'écran
                 {
+                    player.BackColor = Color.Transparent;
                     player.Top += playerSpeed; // on déplace le joueur vers le bas
                 }
 
@@ -201,7 +210,7 @@ namespace SpaceInvadore
 
         private void ZombieGame_Load(object sender, EventArgs e)
         {
-
+            //this.TransparencyKey = Color.Black; // on met la couleur turquoise en couleur transparente
 
         }
 
@@ -244,6 +253,8 @@ namespace SpaceInvadore
             }
 
             zombies.Add(zombos); // on ajoute le zombie à la liste des zombies
+                                 //this.TransparencyKey = Color.Transparent; // on met la couleur turquoise en couleur transparente
+            zombos.BackColor = Color.Transparent; // on met le fond de la picturebox transparent
             this.Controls.Add(zombos); // on ajoute le zombie sur la carte
 
             while (zombos.Bounds.IntersectsWith(pnlSpawnZone.Bounds)) // sécurité pour ne pas mourir à l'apparition d'un zombie
@@ -406,7 +417,7 @@ namespace SpaceInvadore
         {
             if (!drop) // si il n'y a pas d'item sur la carte
             {
-                if (munitions == 0 || score%5 == 0 && score > 0 && Lastscore != score) // si le joueur n'a plus de munitions ou qu'il a fait 5 kills
+                if (munitions == 0 || score % 5 == 0 && score > 0 && Lastscore != score) // si le joueur n'a plus de munitions ou qu'il a fait 5 kills
                 {
                     int left = random.Next(20, this.ClientSize.Width - 20); // position en abscisse du zombie 
                     int top = random.Next(20, this.ClientSize.Height - 20); // position en ordonnée du zombie
@@ -437,7 +448,7 @@ namespace SpaceInvadore
                 {
                     if (((PictureBox)i).Bounds.IntersectsWith(player.Bounds))
                     {
-                        munitions = 10;
+                        munitions += 6;
                         this.Controls.Remove((PictureBox)i);
                         drop = false;
                     }
