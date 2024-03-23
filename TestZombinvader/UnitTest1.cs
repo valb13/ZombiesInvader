@@ -13,14 +13,23 @@ namespace TestZombinvader
         {
            
             var game = new ZombieGame();
-            var e = new KeyEventArgs(Keys.Z); // Simuler la touche Z pressée
+            game.GameTimer_Tick(null, null);
 
-          
+            var initialTop = game.player.Top;
+
+            var e = new KeyEventArgs(Keys.Z); // Simuler la touche Z pressée
             game.KeyIsDown(null, e);
+
+            game.wavewait = false;
+            game.firstrender = false;
+            game.GameTimer_Tick(null,null);
+
+           
 
        
             Assert.AreEqual("up", game.direction); // Vérifier si la direction est correctement définie
             Assert.IsTrue(game.goUp); // Vérifier si goUp est défini sur true
+            Assert.IsTrue(initialTop == game.player.Top + game.playerSpeed);
         }
         [TestMethod]
         public void Test_TakingDammage()
@@ -44,7 +53,6 @@ namespace TestZombinvader
         {
        
             var game = new ZombieGame();
-            List<PictureBox> zombies = new List<PictureBox>();
             game.ZombieSpawn();
 
             game.health = 0;
@@ -74,10 +82,10 @@ namespace TestZombinvader
         {
        
             var game = new ZombieGame();
-            
+            game.ZombieSpawn();
 
-    
-            Assert.IsTrue( game.zombies !=null); // Vérifier si un PictureBox de tag "zombie" est présent dans les contrôles
+
+            Assert.IsTrue( game.zombies[0] !=null); // Vérifier si un PictureBox de tag "zombie" est présent dans les contrôles
         }
 
         [TestMethod]
@@ -94,9 +102,15 @@ namespace TestZombinvader
             var newLeft = game.zombies[0].Left; // Récupérer la nouvelle position en X du premier zombie
             var newTop = game.zombies[0].Top; // Récupérer la nouvelle position en Y du premier zombie
 
-      
+            var origindDffLeft = originalLeft - game.player.Left;
+            var origindDffTop = originalTop - game.player.Top;
+
+            var newDiffLeft = newLeft - game.player.Left;
+            var newDiffTop = newTop - game.player.Top;
+
             Assert.AreNotEqual(originalLeft, newLeft); // Vérifier si la position en X a changé
             Assert.AreNotEqual(originalTop, newTop); // Vérifier si la position en Y a changé
+            Assert.IsTrue(origindDffLeft>newDiffLeft && origindDffTop>newDiffTop);
         }
 
         [TestMethod]

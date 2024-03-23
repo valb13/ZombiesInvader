@@ -165,7 +165,7 @@ namespace SpaceInvadore
 
                 SetSpawnZone(); // on créer la zone anti spawn autour du joueur
 
-                if (zombies.Count() < wave && zombiesSpawn < (wave * 10) + (wave * 4))
+                if (zombies.Count() < wave && zombiesSpawn < (wave * 14))
                 {
                     ZombieSpawn(); // on fait apparaitre un zombie en focntion de la vague et du nombre de zombies
                     zombiesSpawn++; // on incrémente le nombre de zombies apparus
