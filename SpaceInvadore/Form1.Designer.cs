@@ -150,15 +150,15 @@
 
         #endregion
 
-        private FlowLayoutPanel flowLayoutPanel1;
-        private PictureBox player;
-        private System.Windows.Forms.Timer GameTimer;
-        private Label lblScore;
-        private Panel pnlSpawnZone;
-        private Label lblWave;
-        private ProgressBar healthbar;
-        private System.Windows.Forms.Timer DammageTimer;
-        private PictureBox pictureBox1;
-        private Label lblMuni;
+        public FlowLayoutPanel flowLayoutPanel1;
+        public PictureBox player;
+        public System.Windows.Forms.Timer GameTimer;
+        public Label lblScore;
+        public Panel pnlSpawnZone;
+        public Label lblWave;
+        public ProgressBar healthbar;
+        public System.Windows.Forms.Timer DammageTimer;
+        public PictureBox pictureBox1;
+        public Label lblMuni;
     }
 }

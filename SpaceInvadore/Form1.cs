@@ -7,26 +7,26 @@ namespace SpaceInvadore
     public partial class ZombieGame : Form
     {
         #region constantes
-        int playerSpeed = 10; // vitesse du joueur
+        public int playerSpeed = 10; // vitesse du joueur
         #endregion
 
         #region variables
-        string direction = "up"; // direction du joueur
-        bool goLeft, goRight, goUp, goDown; // booléens pour savoir si le joueur va dans une direction
-        bool gameOver = false; // booléen pour savoir si le joueur est mort
-        int playerLeft; // position du joueur en abscisse
-        int playerTop; // position du joueur en ordonnée
-        int score = 0; // score du joueur
-        int wave = 1; // vague de zombies
-        bool wavewait = false; // booléen pour savoir si on est entre deux vagues
-        bool firstrender = true; // booléen pour savoir si c'est le premier rendu
-        int zombiesSpawn = 0; // nombre de zombies apparus
-        int health = 100; // vie du joueur
-        int munitions = 10; // munitions du joueur
-        bool drop = false; // booléen pour savoir si il y a un item sur la carte
-        int Lastscore = 0; // score de la dernière fois qu'un item est apparu
-        Random random = new Random(); // générateur de nombre aléatoire
-        List<PictureBox> zombies = new List<PictureBox>(); // liste des zombies
+        public string direction = "up"; // direction du joueur
+        public bool goLeft, goRight, goUp, goDown; // booléens pour savoir si le joueur va dans une direction
+        public bool gameOver = false; // booléen pour savoir si le joueur est mort
+        public int playerLeft; // position du joueur en abscisse
+        public int playerTop; // position du joueur en ordonnée
+        public int score = 0; // score du joueur
+        public int wave = 1; // vague de zombies
+        public bool wavewait = false; // booléen pour savoir si on est entre deux vagues
+        public bool firstrender = true; // booléen pour savoir si c'est le premier rendu
+        public int zombiesSpawn = 0; // nombre de zombies apparus
+        public int health = 100; // vie du joueur
+        public int munitions = 10; // munitions du joueur
+        public bool drop = false; // booléen pour savoir si il y a un item sur la carte
+        public int Lastscore = 0; // score de la dernière fois qu'un item est apparu
+        public Random random = new Random(); // générateur de nombre aléatoire
+        public List<PictureBox> zombies = new List<PictureBox>(); // liste des zombies
         #endregion
 
 
@@ -35,7 +35,7 @@ namespace SpaceInvadore
             InitializeComponent();
         }
 
-        private void KeyIsUp(object sender, KeyEventArgs e) //action à réaliser quand une touches est relachée
+        public void KeyIsUp(object sender, KeyEventArgs e) //action à réaliser quand une touches est relachée
         {
             switch (e.KeyCode) // on regarde quelle touche est relachée et on adapte la direction et l'image du joueur en fonction
             {
@@ -55,7 +55,7 @@ namespace SpaceInvadore
 
         }
 
-        private void KeyIsDown(object sender, KeyEventArgs e) //action à réaliser quand une touches est préssée
+        public void KeyIsDown(object sender, KeyEventArgs e) //action à réaliser quand une touches est préssée
         {
             switch (e.KeyCode) // on regarde quelle touche est préssée et on adapte la direction et l'image du joueur en fonction
             {
@@ -99,7 +99,7 @@ namespace SpaceInvadore
             }
         }
 
-        private void GameTimer_Tick(object sender, EventArgs e)
+        public void GameTimer_Tick(object sender, EventArgs e)
         {
             // on place le score au centre en haut de l'écran 
             lblScore.Top = 20;
@@ -189,7 +189,7 @@ namespace SpaceInvadore
 
         }
 
-        private void DammageTimer_Tick(object sender, EventArgs e)
+        public void DammageTimer_Tick(object sender, EventArgs e)
         {
             GameOver(); // on vérifie si la partie est finie 
         }
@@ -198,7 +198,7 @@ namespace SpaceInvadore
         /// fonction qui permet de tirer une balle
         /// </summary>
         /// <param name="direction"></param>
-        private void ShootBullet(string direction)
+        public void ShootBullet(string direction)
         {
             munitions -= 1;
             Bullet bullet = new Bullet(); // on crée une nouvelle balle
@@ -208,7 +208,7 @@ namespace SpaceInvadore
             bullet.BuilderBullet(this); // on ajoute la balle au form
         }
 
-        private void ZombieGame_Load(object sender, EventArgs e)
+        public void ZombieGame_Load(object sender, EventArgs e)
         {
             //this.TransparencyKey = Color.Black; // on met la couleur turquoise en couleur transparente
 
@@ -217,7 +217,7 @@ namespace SpaceInvadore
         /// <summary>
         /// fonction qui permet de faire apparaitre des zombies aléatoirement sur la carte
         /// </summary>
-        private void ZombieSpawn()
+        public void ZombieSpawn()
         {
 
             int left = random.Next(20, this.ClientSize.Width - 20); // position en abscisse du zombie 
@@ -257,7 +257,7 @@ namespace SpaceInvadore
             zombos.BackColor = Color.Transparent; // on met le fond de la picturebox transparent
             this.Controls.Add(zombos); // on ajoute le zombie sur la carte
 
-            while (zombos.Bounds.IntersectsWith(pnlSpawnZone.Bounds)) // sécurité pour ne pas mourir à l'apparition d'un zombie
+            while (zombos.Bounds.IntersectsWith(pnlSpawnZone.Bounds) || Collision(zombos)) // sécurité pour ne pas mourir à l'apparition d'un zombie
             {
                 zombos.Left = random.Next(20, this.ClientSize.Width - 20); // position en abscisse du zombie 
                 zombos.Top = random.Next(20, this.ClientSize.Height - 20); // position en ordonnée du zombie
@@ -268,7 +268,7 @@ namespace SpaceInvadore
         /// <summary>
         /// fonction qui permet de déplacer les zombies vers player
         /// </summary>
-        private void ZombieMove()
+        public void ZombieMove()
         {
 
             foreach (PictureBox zombie in zombies) // tous les zombies de la carte
@@ -304,7 +304,7 @@ namespace SpaceInvadore
         /// </summary>
         /// <param name="picture"></param>
         /// <returns></returns>
-        private bool Collision(PictureBox picture)
+        public bool Collision(PictureBox picture)
         {
             bool collision = false; // initialisation de la valeur retournée
 
@@ -342,7 +342,7 @@ namespace SpaceInvadore
         /// <summary>
         /// fonction qui permet de supprimer les zombies et les balles quand ils se touchent
         /// </summary>
-        private void DispawnZombie()
+        public void DispawnZombie()
         {
             foreach (var c in this.Controls) // pour chaque objet du form
             {
@@ -370,7 +370,7 @@ namespace SpaceInvadore
         {
             foreach (var z in zombies)
             {
-                if (z.Bounds.IntersectsWith(player.Bounds)) // on vérifie si un zombie touche le joueur
+                if (z.Bounds.IntersectsWith(player.Bounds) || health ==0) // on vérifie si un zombie touche le joueur
                 {
                     z.BringToFront(); // on met le zombie devant les autres objets
                     if (health > 0) // si la vie du joueur est suppérieur à 0
@@ -401,7 +401,7 @@ namespace SpaceInvadore
 
         }
 
-        private void SetSpawnZone() // créer une zone de non spawn pour les zombies autour du joueur
+        public void SetSpawnZone() // créer une zone de non spawn pour les zombies autour du joueur
         {
             pnlSpawnZone.Width = player.Width + 80;
             pnlSpawnZone.Height = player.Height + 80;
@@ -413,7 +413,7 @@ namespace SpaceInvadore
         /// <summary>
         /// fonction pour ajouter un item sur la carte
         /// </summary>
-        private void DropItem()
+        public void DropItem()
         {
             if (!drop) // si il n'y a pas d'item sur la carte
             {
@@ -440,7 +440,7 @@ namespace SpaceInvadore
         /// <summary>
         /// fonction pour savoir si le joueur à ramasser un item
         /// </summary>
-        private void TakeItem()
+        public void TakeItem()
         {
             foreach (var i in this.Controls)
             {
