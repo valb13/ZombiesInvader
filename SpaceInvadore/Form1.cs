@@ -86,7 +86,7 @@ namespace SpaceInvadore
                         ShootBullet(direction);
                     } // empêcher le joueur de tirer en dehors du jeu
 
-                    if (wavewait == true)
+                    if (wavewait)
                     {
                         wavewait = false;
                         lblWave.Visible = false;
@@ -167,7 +167,7 @@ namespace SpaceInvadore
 
                 if (zombies.Count() < wave && zombiesSpawn < (wave * 14))
                 {
-                    ZombieSpawn(); // on fait apparaitre un zombie en focntion de la vague et du nombre de zombies
+                    ZombieSpawn(); // on fait apparaitre un zombie en fonction de la vague et du nombre de zombies
                     zombiesSpawn++; // on incrémente le nombre de zombies apparus
 
                 }

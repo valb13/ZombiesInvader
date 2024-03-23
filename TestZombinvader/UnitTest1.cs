@@ -17,7 +17,7 @@ namespace TestZombinvader
 
             var initialTop = game.player.Top;
 
-            var e = new KeyEventArgs(Keys.Z); // Simuler la touche Z pressée
+            var e = new KeyEventArgs(Keys.Z); 
             game.KeyIsDown(null, e);
 
             game.wavewait = false;
@@ -29,7 +29,7 @@ namespace TestZombinvader
        
             Assert.AreEqual("up", game.direction); // Vérifier si la direction est correctement définie
             Assert.IsTrue(game.goUp); // Vérifier si goUp est défini sur true
-            Assert.IsTrue(initialTop == game.player.Top + game.playerSpeed);
+            Assert.IsTrue(initialTop == game.player.Top + game.playerSpeed); // Verifier si le joueur s'est bien déplacé vers le haut de l'écran
         }
         [TestMethod]
         public void Test_TakingDammage()
@@ -45,7 +45,7 @@ namespace TestZombinvader
             game.GameOver();
 
 
-            Assert.IsTrue(game.health==(initialHealth-25)); // Vérifier si la vie du joueur descend bien
+            Assert.IsTrue(game.health==(initialHealth-25)); // Vérifier si la vie du joueur diminue bien
         }
 
         [TestMethod]
@@ -68,13 +68,26 @@ namespace TestZombinvader
         {
            
             var game = new ZombieGame();
-            game.munitions = 0; // Simuler le joueur sans munitions
+            game.munitions = 0; 
 
          
             game.DropItem();
 
           
-            Assert.IsTrue(game.drop); // Vérifier si drop est défini sur true après avoir vérifié que le joueur n'a pas de munitions
+            Assert.IsTrue(game.drop); // Vérifier si drop est défini sur true 
+        }
+        [TestMethod]
+        public void Test_DropItemFiveKills()
+        {
+
+            var game = new ZombieGame();
+            game.score = 5;
+
+
+            game.DropItem();
+
+
+            Assert.IsTrue(game.drop); // Vérifier si drop est défini sur true 
         }
 
         [TestMethod]
@@ -85,7 +98,7 @@ namespace TestZombinvader
             game.ZombieSpawn();
 
 
-            Assert.IsTrue( game.zombies[0] !=null); // Vérifier si un PictureBox de tag "zombie" est présent dans les contrôles
+            Assert.IsTrue( game.zombies[0] !=null); // Vérifier si un zombie est present dans la liste des zombies 
         }
 
         [TestMethod]
@@ -96,12 +109,11 @@ namespace TestZombinvader
 
           
             game.ZombieSpawn();
-            var originalLeft = game.zombies[0].Left; // Récupérer la position initiale en X du premier zombie
-            var originalTop = game.zombies[0].Top; // Récupérer la position initiale en Y du premier zombie
+            var originalLeft = game.zombies[0].Left; 
+            var originalTop = game.zombies[0].Top;  
             game.ZombieMove();
-            var newLeft = game.zombies[0].Left; // Récupérer la nouvelle position en X du premier zombie
-            var newTop = game.zombies[0].Top; // Récupérer la nouvelle position en Y du premier zombie
-
+            var newLeft = game.zombies[0].Left;  
+            var newTop = game.zombies[0].Top;
             var origindDffLeft = originalLeft - game.player.Left;
             var origindDffTop = originalTop - game.player.Top;
 
@@ -110,7 +122,7 @@ namespace TestZombinvader
 
             Assert.AreNotEqual(originalLeft, newLeft); // Vérifier si la position en X a changé
             Assert.AreNotEqual(originalTop, newTop); // Vérifier si la position en Y a changé
-            Assert.IsTrue(origindDffLeft>newDiffLeft && origindDffTop>newDiffTop);
+            Assert.IsTrue(origindDffLeft>newDiffLeft && origindDffTop>newDiffTop); // Vérifier si la distance entre le joueur et le zombie a bien diminuer
         }
 
         [TestMethod]
@@ -124,13 +136,13 @@ namespace TestZombinvader
             game.zombies[0].Bounds = game.zombies[1].Bounds;
 
          
-            Assert.IsTrue(game.Collision(game.zombies[1])); // Vérifier si la collision est détectée entre le zombie et l'autre PictureBox
+            Assert.IsTrue(game.Collision(game.zombies[1])); // Vérifier si la collision est détectée entre deux zombies
         }
         [TestMethod]
         public void Test_TakeItem()
         {
             var game = new ZombieGame();
-            game.munitions = 0; // Simuler le joueur sans munitions
+            game.munitions = 0; 
             game.DropItem();
 
             foreach (var i in game.Controls)
@@ -143,7 +155,7 @@ namespace TestZombinvader
             }
             game.TakeItem();
 
-            Assert.IsTrue((!game.drop) && (game.munitions == 6)); // Vérifier si drop est défini sur true après avoir vérifié que le joueur n'a pas de munitions
+            Assert.IsTrue((!game.drop) && (game.munitions == 6)); // Vérifier si drop est défini sur false et que le nombre de munitions a augmenté
         }
         [TestMethod]
         public void Test_DiagMove()
@@ -167,7 +179,7 @@ namespace TestZombinvader
             game.GameTimer_Tick(game.player, z);
 
 
-            Assert.IsTrue(game.player.Top == expectedTop  && game.player.Left == expectedLeft); ; // Vérifier si le booléen goUp est défini sur true
+            Assert.IsTrue(game.player.Top == expectedTop  && game.player.Left == expectedLeft); ; // Vérifier si le joueur se déplace bien vers le haut droit de l'écran
         }
 
         [TestMethod]
@@ -197,7 +209,7 @@ namespace TestZombinvader
 
             game.DispawnZombie();
 
-            Assert.IsTrue(game.zombies.Count == 0 && game.score == 1);
+            Assert.IsTrue(game.zombies.Count == 0 && game.score == 1); // Vérifier si le nombre de zombie à bien diminué et que le score a bien augmenté
         }
 
 
